@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import demolition.util.GameConfig;
 import demolition.util.GameLevel;
@@ -102,7 +103,7 @@ public class App extends PApplet {
     }
 
     public void draw() {
-        background(239, 129, 0);
+         background(239, 129, 0);
         if (this.currentGameLevel.getTime() <= 0 || this.gameConfig.getLives() <= 0) {
             this.text("GAME OVER", 120, 240);
             return;
@@ -118,14 +119,25 @@ public class App extends PApplet {
         this.text(this.currentGameLevel.getTime(), 290, 50);
         // Draw map
         this.gameMap.buildMap(grid, this);
-        //Draw players
         if (bombGuy.isCaughtInExplosion()) {
             this.gameConfig.setLives(this.gameConfig.getLives() - 1);
+            this.bombGuy.setCoord(this.bombGuy.getOriginalPosition());
+            this.bombGuy.setCaughtInExplosion(false);
         }
+        //Possible collison with enemies
+        if (this.isEnemyInTheSameSpace(this.redEnemies) || this.isEnemyInTheSameSpace(this.yellowEnemies)) {
+            this.gameConfig.setLives(this.gameConfig.getLives() - 1);
+            this.bombGuy.setCoord(this.bombGuy.getOriginalPosition());
+        }
+        //Draw players
         this.bombGuy.draw(this, this.bombGuy.getOrientation());
+        //Filtering the red enemies caught in explosion
+        this.redEnemies = this.redEnemies.stream().filter(rE -> !rE.isCaughtInExplosion()).collect(Collectors.toList());
         for (RedEnemy redEnemy: this.redEnemies) {
             redEnemy.draw(this, redEnemy.getOrientation());
         }
+        //Filtering the yellow enemies caught in explosion
+        this.yellowEnemies = this.yellowEnemies.stream().filter(yE -> !yE.isCaughtInExplosion()).collect(Collectors.toList());
         this.yellowEnemies.forEach((yellowEnemy) -> {
             yellowEnemy.draw(this, yellowEnemy.getOrientation());
         });
@@ -261,16 +273,29 @@ public class App extends PApplet {
         return grid;
     }
 
-    public RedEnemy getRedEnemy() {
-        return redEnemies.get(0);
+    public List<RedEnemy> getRedEnemies() {
+        return redEnemies;
     }
 
-    public YellowEnemy getYellowEnemy() {
-        return yellowEnemies.get(0);
+    public List<YellowEnemy> getYellowEnemies() {
+        return yellowEnemies;
     }
 
     public BombGuy getBombGuy() {
         return bombGuy;
+    }
+
+    private boolean isEnemyInTheSameSpace(List<? extends GamePlayer> enemies) {
+        for(GamePlayer enemy: enemies) {
+            int rX = enemy.getxCoord();
+            int rY = enemy.getyCoord();
+            int bX = this.bombGuy.getxCoord();
+            int bY = this.bombGuy.getyCoord();
+            if (rX == bX && rY == bY) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public static void main(String[] args) {

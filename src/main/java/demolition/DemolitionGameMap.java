@@ -77,28 +77,32 @@ public class DemolitionGameMap {
     }
 
     public List<RedEnemy> getRedEnemies(String[][] grid) {
+        ArrayList<RedEnemy> rEnemies = new ArrayList<>();
         for (int i = 0; i < grid.length; i++) {
             for (int j = 0; j < grid[i].length; j++) {
                 if (grid[i][j].equals("R")) {
                     RedEnemy redEnemy = new RedEnemy(j, i);
                     redEnemy.setOrientation(Orientation.RIGHT);
-                    this.redEnemies.add(redEnemy);
+                    rEnemies.add(redEnemy);
                 }
             }
         }
+        this.redEnemies = rEnemies;
         return this.redEnemies;
     }
 
     public List<YellowEnemy> getYellowEnemies(String[][] grid) {
+        ArrayList<YellowEnemy> yEnemies = new ArrayList<>();
         for (int i = 0; i < grid.length; i++) {
             for (int j = 0; j < grid[i].length; j++) {
                 if (grid[i][j].equals("Y")) {
                     YellowEnemy yellowEnemy = new YellowEnemy(j, i);
                     yellowEnemy.setOrientation(Orientation.LEFT);
-                    this.yellowEnemies.add(yellowEnemy);
+                    yEnemies.add(yellowEnemy);
                 }
             }
         }
+        this.yellowEnemies = yEnemies;
         return this.yellowEnemies;
     }
 }

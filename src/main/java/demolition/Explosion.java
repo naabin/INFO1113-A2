@@ -1,6 +1,7 @@
 package demolition;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import processing.core.PApplet;
@@ -95,7 +96,7 @@ public class Explosion {
                 app.mutateGrid(leftCoord, " ");
             }
         }
-        if (canExplodeInCoord(farLeftCoord, grid)) {
+        if (canExplodeInCoord(farLeftCoord, grid) && canExplodeInCoord(leftCoord, grid) ) {
             app.image(this.explosionSprites.get(ExplosionSpriteOrientation.CENTRE), this.xCoord * 32, this.yCoord * 32 + DemolitionGameMap.TOP_OFFSET);
             if (detetectPlayersAndBrokenWalls(farLeftCoord, grid, app)) {
                 app.image(this.explosionSprites.get(ExplosionSpriteOrientation.END_LEFT), farLeftCoord[0] * 32, farLeftCoord[1] * 32 + DemolitionGameMap.TOP_OFFSET);
@@ -109,7 +110,7 @@ public class Explosion {
                 app.mutateGrid(rightCoord, " ");
             }   
         }
-        if (canExplodeInCoord(farRightCoord, grid)) {
+        if (canExplodeInCoord(farRightCoord, grid) && canExplodeInCoord(rightCoord, grid)) {
             app.image(this.explosionSprites.get(ExplosionSpriteOrientation.CENTRE), this.xCoord * 32, this.yCoord * 32 + DemolitionGameMap.TOP_OFFSET);
             if (detetectPlayersAndBrokenWalls(farRightCoord, grid, app)) {
                 app.image(this.explosionSprites.get(ExplosionSpriteOrientation.END_RIGHT), farRightCoord[0] * 32, farRightCoord[1] * 32 + DemolitionGameMap.TOP_OFFSET);
@@ -123,7 +124,7 @@ public class Explosion {
                 app.mutateGrid(topCoord, " ");
             }
         }
-        if (canExplodeInCoord(farTopCoord, grid)) {
+        if (canExplodeInCoord(farTopCoord, grid) && canExplodeInCoord(topCoord, grid)) {
             app.image(this.explosionSprites.get(ExplosionSpriteOrientation.CENTRE), this.xCoord * 32, this.yCoord * 32 + DemolitionGameMap.TOP_OFFSET);
             if (detetectPlayersAndBrokenWalls(farTopCoord, grid, app)) {
                 app.image(this.explosionSprites.get(ExplosionSpriteOrientation.END_TOP), farTopCoord[0] * 32, farTopCoord[1] * 32 + DemolitionGameMap.TOP_OFFSET);
@@ -137,7 +138,7 @@ public class Explosion {
                 app.mutateGrid(bottomCoord, " ");
             }
         }
-        if (canExplodeInCoord(farBottomCoord, grid)) {
+        if (canExplodeInCoord(farBottomCoord, grid) && canExplodeInCoord(bottomCoord, grid)) {
             app.image(this.explosionSprites.get(ExplosionSpriteOrientation.CENTRE), this.xCoord * 32, this.yCoord * 32 + DemolitionGameMap.TOP_OFFSET);
             if (detetectPlayersAndBrokenWalls(farBottomCoord, grid, app)) {
                 app.image(this.explosionSprites.get(ExplosionSpriteOrientation.END_BOTTOM), farBottomCoord[0] * 32, farBottomCoord[1] * 32 + DemolitionGameMap.TOP_OFFSET);
@@ -148,28 +149,38 @@ public class Explosion {
 
     private boolean canExplodeInCoord(Integer[] coords, String[][] grid) {
         int x = coords[0], y = coords[1];
-        if (y > grid.length) return false;
-        if (x > grid[0].length) return false;
-        if (grid[x][y].equals("W")) return false;
+        if (y > grid.length - 1 || y <= 0) return false;
+        if (x > grid[0].length - 1 || x <= 0) return false;
+        if (grid[y][x].equals("W")) return false;
         return true;
     }
 
     private boolean detetectPlayersAndBrokenWalls(Integer[] coords, String[][] grid, App app) {
         int x = coords[0], y = coords[1];
-        if (grid[x][y].equals("R")) {
-            app.getRedEnemy().setCaughtInExplosion(true);
-            return true;
-        } 
-        if (grid[x][y].equals("Y")) {
-            app.getYellowEnemy().setCaughtInExplosion(true);
-            return true;
+        List<RedEnemy> redEnemies = app.getRedEnemies();
+        for (RedEnemy redEnemy: redEnemies) {
+            int redX = redEnemy.getxCoord();
+            int redY = redEnemy.getyCoord();
+            if (redX == x && redY == y) {
+                redEnemy.setCaughtInExplosion(true);
+                return true;
+            }
         }
-        if (grid[x][y].equals("P")) {
+        List<YellowEnemy> yellowEnemies = app.getYellowEnemies();
+        for (YellowEnemy yellowEnemy: yellowEnemies) {
+            int yellowX = yellowEnemy.getxCoord();
+            int yellowY = yellowEnemy.getyCoord();
+            if (yellowX == x && yellowY == y) {
+                yellowEnemy.setCaughtInExplosion(true);
+                return true;
+            }
+        }
+        if (x == app.getBombGuy().getxCoord() && y == app.getBombGuy().getyCoord()) { 
             app.getBombGuy().setCaughtInExplosion(true);
             return true;
         }
-        if (grid[x][y].equals("B")) return true;
-        if (grid[x][y].equals(" ")) return true;
+        if (grid[y][x].equals("B")) return true;
+        if (grid[y][x].equals(" ")) return true;
         return false;
     }
 }
