@@ -1,8 +1,12 @@
 package demolition;
-
+/**
+ * <p>This class represents the Bomb guy. Bomb guy is the controlled player in the game. 
+ * It can move upon user's providing direction from the keyboard. It can move horizontally and vertically along 
+ * the empty tiles in the game map. It has infinite amount of bomb and it can place anywhere in the empty tile.
+ * It it get caught with explosion or collide with enemies, it loses life.
+ */
 public class BombGuy extends GamePlayer {
 
-    private Integer[] originalPosition;
 
     public BombGuy(int xCoord, int yCoord) {
         super(xCoord, yCoord);
@@ -14,15 +18,7 @@ public class BombGuy extends GamePlayer {
     
     @Override
     public void move(String[][] grid) {
-        
-    }
-
-    public void setOriginalPosition(Integer[] originalPosition) {
-        this.originalPosition = originalPosition;
-    }
-
-    public Integer[] getOriginalPosition() {
-        return originalPosition;
+        //No implementation required here.
     }
 
     @Override

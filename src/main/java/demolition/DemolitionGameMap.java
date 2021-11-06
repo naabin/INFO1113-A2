@@ -5,20 +5,20 @@ import java.util.List;
 
 import processing.core.PApplet;
 import processing.core.PImage;
-
+/**
+ * This class represents the game map in the demolition game. This class builds map in the game
+ * and allocate solid wall, broken wall and empty tile to thier places.
+ */
 public class DemolitionGameMap {
     private PImage emptyTile;
     private PImage brokenWall;
     private PImage solidWall;
     private PImage goaltile;
     private Integer[] goalCoord = new Integer[2];
-    private List<RedEnemy> redEnemies;
-    private List<YellowEnemy> yellowEnemies;
     public static final int TOP_OFFSET = 64;
 
     public DemolitionGameMap() {
-        this.redEnemies = new ArrayList<>();
-        this.yellowEnemies = new ArrayList<>();
+        
     }
 
     public void setEmptyTile(PImage emptyTile) {
@@ -42,7 +42,11 @@ public class DemolitionGameMap {
     }
 
 
-
+    /**
+     * 
+     * @param grid
+     * @param app
+     */
     public void buildMap(String[][] grid, PApplet app) {
         for (int i = 0; i < grid.length; i++) {
             for (int j = 0; j < grid[0].length; j++) {
@@ -82,13 +86,13 @@ public class DemolitionGameMap {
             for (int j = 0; j < grid[i].length; j++) {
                 if (grid[i][j].equals("R")) {
                     RedEnemy redEnemy = new RedEnemy(j, i);
+                    redEnemy.setOriginalPosition(new Integer[] {j, i});
                     redEnemy.setOrientation(Orientation.RIGHT);
                     rEnemies.add(redEnemy);
                 }
             }
         }
-        this.redEnemies = rEnemies;
-        return this.redEnemies;
+        return rEnemies;
     }
 
     public List<YellowEnemy> getYellowEnemies(String[][] grid) {
@@ -97,12 +101,12 @@ public class DemolitionGameMap {
             for (int j = 0; j < grid[i].length; j++) {
                 if (grid[i][j].equals("Y")) {
                     YellowEnemy yellowEnemy = new YellowEnemy(j, i);
+                    yellowEnemy.setOriginalPosition(new Integer[]{j, i});
                     yellowEnemy.setOrientation(Orientation.LEFT);
                     yEnemies.add(yellowEnemy);
                 }
             }
         }
-        this.yellowEnemies = yEnemies;
-        return this.yellowEnemies;
+        return yEnemies;
     }
 }

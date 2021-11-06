@@ -13,7 +13,9 @@ import processing.core.PFont;
 import processing.core.PImage;
 import processing.data.JSONArray;
 import processing.data.JSONObject;
-
+/**
+ * This class is the main class for the game. Gradle load this class when the program begins.
+ */
 public class App extends PApplet {
 
     public static final int WIDTH = 480;
@@ -26,7 +28,6 @@ public class App extends PApplet {
     private int bombAnimationInterval = 0;
     private int explosionInterval = 0;
     private int bombDetonationTime = 0;
-    int deltaTime = 200;
 
     private final GameConfig gameConfig;
     private final DemolitionGameMap gameMap;
@@ -112,6 +113,7 @@ public class App extends PApplet {
             this.text("YOU WIN", 120, 240);
             return;
         }
+        //Draw icons and text for the time and remaining lives
         this.image(this.clockIcon, 260, 20);
         this.image(this.playerLevelIcon, 140, 20);
         this.text(this.gameConfig.getLives(), 180, 50);
@@ -128,6 +130,8 @@ public class App extends PApplet {
         if (this.isEnemyInTheSameSpace(this.redEnemies) || this.isEnemyInTheSameSpace(this.yellowEnemies)) {
             this.gameConfig.setLives(this.gameConfig.getLives() - 1);
             this.bombGuy.setCoord(this.bombGuy.getOriginalPosition());
+            this.redEnemies.forEach(rE -> rE.setCoord(rE.getOriginalPosition()));
+            this.yellowEnemies.forEach(yE -> yE.setCoord(yE.getOriginalPosition()));
         }
         //Draw players
         this.bombGuy.draw(this, this.bombGuy.getOrientation());
@@ -141,12 +145,14 @@ public class App extends PApplet {
         this.yellowEnemies.forEach((yellowEnemy) -> {
             yellowEnemy.draw(this, yellowEnemy.getOrientation());
         });
+        // game character animation transition
         if (this.millis() > playerAnimationInterval + 200) {
             this.bombGuy.setImageIndex(this.bombGuy.getImageIndex() + 1);
             this.redEnemies.forEach((redEnemy) -> redEnemy.setImageIndex(redEnemy.getImageIndex() + 1));
             this.yellowEnemies.forEach((yellowEnemy) -> yellowEnemy.setImageIndex(yellowEnemy.getImageIndex() + 1));
             playerAnimationInterval = this.millis();
         }
+        // if the goal is reached reset characters and move to the next level
         if (this.reachedGoal() && this.level < this.gameConfig.getLevels().size() - 1) {
             this.level += 1;
             this.bombGuy.resetCoord();
@@ -157,6 +163,7 @@ public class App extends PApplet {
             this.bombGuy.setCoord(grid);
             this.bombGuy.setOrientation(Orientation.STRAIGHT);
             this.redEnemies = this.gameMap.getRedEnemies(this.grid);
+            //set the enemies sprites as the game moves for the next level
             this.redEnemies.forEach((redEnemy) -> {
                 if (redEnemy.getPlayerSprites().size() <= 0) {
                     redEnemy.setPlayerSprites(this.redEnemySprites);
@@ -191,15 +198,21 @@ public class App extends PApplet {
                 this.bombAnimationInterval = this.millis();
             }
         }
+        // explode the bomb
         if (this.explosion.canExplode()) {
             this.explosion.explode(this);
         }
+        // remain the explosion for 2 seconds
         if (this.millis() > this.explosionInterval + 2000) {
             this.explosion.setCanExplode(false);
             this.explosionInterval = millis();
         }
     }
-
+    /**
+     * reads the config.json from the file system and loads in the program
+     * @param config is an instance of {@link GameConfig} where it stores the data coming 
+     * from config.json
+     */
     private void loadConfig(GameConfig config) {
         JSONObject jsonObject = PApplet.loadJSONObject(new File("config.json"));
         int lives  = (int)jsonObject.get("lives");
@@ -230,25 +243,25 @@ public class App extends PApplet {
         Integer[] topCoord = new Integer[] {xCoord, yCoord - 1};
         Integer[] bottomCoord = new Integer[]{xCoord, yCoord + 1};
         if (this.keyCode == 37) {
-            if (this.bombGuy.canMoveTo(leftCoord[0], leftCoord[1], grid)) {
+            if (this.bombGuy.canMoveTo(leftCoord, grid)) {
                 this.bombGuy.setCoord(leftCoord);
                 this.bombGuy.setOrientation(Orientation.LEFT);
             }
         }
         if (this.keyCode == 39) {
-            if (this.bombGuy.canMoveTo(rightCoord[0], rightCoord[1], grid)) {
+            if (this.bombGuy.canMoveTo(rightCoord, grid)) {
                 this.bombGuy.setCoord(rightCoord);
                 this.bombGuy.setOrientation(Orientation.RIGHT);
             }
         }
         if (this.keyCode == 38) {
-            if (this.bombGuy.canMoveTo(topCoord[0], topCoord[1], grid)) {
+            if (this.bombGuy.canMoveTo(topCoord, grid)) {
                 this.bombGuy.setCoord(topCoord);
                 this.bombGuy.setOrientation(Orientation.UP);
             }
         }
         if (this.keyCode == 40) {
-            if (this.bombGuy.canMoveTo(bottomCoord[0], bottomCoord[1], grid)) {
+            if (this.bombGuy.canMoveTo(bottomCoord, grid)) {
                 this.bombGuy.setCoord(bottomCoord);
                 this.bombGuy.setOrientation(Orientation.STRAIGHT);
             }
