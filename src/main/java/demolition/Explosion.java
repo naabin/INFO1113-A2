@@ -77,6 +77,13 @@ public class Explosion {
     public boolean canExplode() {
         return this.canExplode;
     }
+
+    public void setExplosionSprites(Map<ExplosionSpriteOrientation, PImage> explosionSprites) {
+        this.explosionSprites = explosionSprites;
+    }
+    public Map<ExplosionSpriteOrientation, PImage> getExplosionSprites() {
+        return explosionSprites;
+    }
     /**
      * <p>Loads all the explosion sprites from the file system and 
      * stores it in a map container using direction as key and sprite as value.</p>
@@ -195,7 +202,7 @@ public class Explosion {
      * @param grid presents the 2D String array from the txt file
      * @return true if it can explode in given coord 
      */
-    private boolean canExplodeInCoord(Integer[] coord, String[][] grid) {
+    public boolean canExplodeInCoord(Integer[] coord, String[][] grid) {
         int x = coord[0], y = coord[1];
         if (y > grid.length - 1 || y <= 0) return false;
         if (x > grid[0].length - 1 || x <= 0) return false;
@@ -209,7 +216,7 @@ public class Explosion {
      * @param app is an instance of {@link App}
      * @return true if broken wall or player or enemy are detected in the given coord.
      */
-    private boolean detetectPlayersAndBrokenWalls(Integer[] coord, String[][] grid, App app) {
+    public boolean detetectPlayersAndBrokenWalls(Integer[] coord, String[][] grid, App app) {
         int x = coord[0], y = coord[1];
         List<RedEnemy> redEnemies = app.getRedEnemies();
         for (RedEnemy redEnemy: redEnemies) {

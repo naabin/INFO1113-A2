@@ -37,6 +37,21 @@ public class DemolitionGameMap {
         this.goaltile = goalTile;
     }
 
+    public PImage getEmptyTile() {
+        return emptyTile;
+    }
+
+    public PImage getBrokenWall() {
+        return brokenWall;
+    }
+
+    public PImage getGoaltile() {
+        return goaltile;
+    }
+    public PImage getSolidWall() {
+        return solidWall;
+    }
+
     public Integer[] getGoalCoord() {
         return goalCoord;
     }

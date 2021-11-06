@@ -50,7 +50,7 @@ public class RedEnemy extends GamePlayer {
      * Randomly selects the x and y coordinate and sets it along with orientation for the next move for the red enemy
      * @param adjacentCoords is the map container temporarily stored where player can move into ceratin coordinates.
      */
-    private void setRandomCoord(Map<Orientation, Integer[]> adjacentCoords) {
+    public void setRandomCoord(Map<Orientation, Integer[]> adjacentCoords) {
         Map.Entry[] coords = adjacentCoords.entrySet().toArray(new Map.Entry[adjacentCoords.size()]);
         Random random = new Random();
         int randomIndex = random.nextInt(Math.max(0, coords.length));
@@ -63,7 +63,7 @@ public class RedEnemy extends GamePlayer {
      * @param coord is movable x and y coordinate
      * @param orientation is direction for the next move
      */
-    private void setNextCoord(Integer[] coord, Orientation orientation) {
+    public void setNextCoord(Integer[] coord, Orientation orientation) {
         setOrientation(orientation);
         setCoord(coord);
     }
@@ -73,7 +73,7 @@ public class RedEnemy extends GamePlayer {
      * @param grid
      * @return
      */
-    private Map<Orientation, Integer[]> getAdjacentCoords(String[][] grid) {
+    public Map<Orientation, Integer[]> getAdjacentCoords(String[][] grid) {
         Map<Orientation, Integer[]> adjacentCoords = new HashMap<>();
         Integer[] leftCoord = new Integer[] {this.xCoord - 1, this.yCoord};
         Integer[] rightCoord = new Integer[] {this.xCoord + 1, this.yCoord};

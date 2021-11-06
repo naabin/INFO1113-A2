@@ -85,6 +85,7 @@ public class YellowEnemy extends GamePlayer {
                     this.setxCoord(j);
                     this.setyCoord(i);
                     setOriginalPosition(new Integer[]{i, j});
+                    setOrientation(Orientation.LEFT);
                 }
             }
         }

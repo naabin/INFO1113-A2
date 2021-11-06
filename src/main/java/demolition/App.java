@@ -67,12 +67,12 @@ public class App extends PApplet {
     }
 
     public void settings() {
-        size(WIDTH, HEIGHT);
+        this.size(WIDTH, HEIGHT);
     }
 
     public void setup() {
         // Load images during setup
-        frameRate(FPS);
+        this.frameRate(FPS);
         this.gameMap.setBrokenWall(this.loadImage("src/main/resources/broken/broken.png"));
         this.gameMap.setEmptyTile(this.loadImage("src/main/resources/empty/empty.png"));
         this.gameMap.setGoalTile(this.loadImage("src/main/resources/goal/goal.png"));
@@ -104,7 +104,7 @@ public class App extends PApplet {
     }
 
     public void draw() {
-         background(239, 129, 0);
+        this.background(239, 129, 0);
         if (this.currentGameLevel.getTime() <= 0 || this.gameConfig.getLives() <= 0) {
             this.text("GAME OVER", 120, 240);
             return;
@@ -213,7 +213,7 @@ public class App extends PApplet {
      * @param config is an instance of {@link GameConfig} where it stores the data coming 
      * from config.json
      */
-    private void loadConfig(GameConfig config) {
+    public void loadConfig(GameConfig config) {
         JSONObject jsonObject = PApplet.loadJSONObject(new File("config.json"));
         int lives  = (int)jsonObject.get("lives");
         JSONArray jsonArray =  jsonObject.getJSONArray("levels");
