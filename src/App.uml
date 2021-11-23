@@ -1,0 +1,380 @@
+@startuml
+
+/' diagram meta data start
+config=StructureConfiguration;
+{
+  "projectClassification": {
+    "searchMode": "OpenProject", // OpenProject, AllProjects
+    "includedProjects": "",
+    "pathEndKeywords": "*.impl",
+    "isClientPath": "",
+    "isClientName": "",
+    "isTestPath": "",
+    "isTestName": "",
+    "isMappingPath": "",
+    "isMappingName": "",
+    "isDataAccessPath": "",
+    "isDataAccessName": "",
+    "isDataStructurePath": "",
+    "isDataStructureName": "",
+    "isInterfaceStructuresPath": "",
+    "isInterfaceStructuresName": "",
+    "isEntryPointPath": "",
+    "isEntryPointName": ""
+  },
+  "graphRestriction": {
+    "classPackageExcludeFilter": "",
+    "classPackageIncludeFilter": "",
+    "classNameExcludeFilter": "",
+    "classNameIncludeFilter": "",
+    "methodNameExcludeFilter": "",
+    "methodNameIncludeFilter": "",
+    "removeByInheritance": "", // inheritance/annotation based filtering is done in a second step
+    "removeByAnnotation": "",
+    "removeByClassPackage": "", // cleanup the graph after inheritance/annotation based filtering is done
+    "removeByClassName": "",
+    "cutMappings": false,
+    "cutEnum": true,
+    "cutTests": true,
+    "cutClient": true,
+    "cutDataAccess": false,
+    "cutInterfaceStructures": false,
+    "cutDataStructures": false,
+    "cutGetterAndSetter": true,
+    "cutConstructors": true
+  },
+  "graphTraversal": {
+    "forwardDepth": 6,
+    "backwardDepth": 6,
+    "classPackageExcludeFilter": "",
+    "classPackageIncludeFilter": "",
+    "classNameExcludeFilter": "",
+    "classNameIncludeFilter": "",
+    "methodNameExcludeFilter": "",
+    "methodNameIncludeFilter": "",
+    "hideMappings": false,
+    "hideDataStructures": false,
+    "hidePrivateMethods": false,
+    "hideInterfaceCalls": true, // indirection: implementation -> interface (is hidden) -> implementation
+    "onlyShowApplicationEntryPoints": false // root node is included
+  },
+  "details": {
+    "aggregation": "GroupByClass", // ByClass, GroupByClass, None
+    "showClassGenericTypes": true,
+    "showMethods": true,
+    "showMethodParameterNames": true,
+    "showMethodParameterTypes": true,
+    "showMethodReturnType": true,
+    "showPackageLevels": 2,
+    "showDetailedClassStructure": true
+  },
+  "rootClass": "demolition.App"
+}
+diagram meta data end '/
+
+
+
+digraph g {
+    rankdir="TB"
+    splines=polyline
+    
+
+'nodes 
+subgraph cluster_3600386 { 
+   	label=util
+	labeljust=l
+	fillcolor="#ececec"
+	style=filled
+   
+   GameConfig1790511108[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="CENTER" >GameConfig</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   levels: ArrayList&lt;GameLevel&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >-   lives: int</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ addLevel(gameLevel: GameLevel)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getLives(): int</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setLives(lives: int): void</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+GameLevel1790511108[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >GameLevel</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   grid: String[][]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   path: String</TD></TR>
+<TR><TD ALIGN="LEFT" >-   time: int</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+   getPath(): String</TD></TR>
+<TR><TD ALIGN="LEFT" >+   getTime(): int</TD></TR>
+<TR><TD ALIGN="LEFT" >+   setPath(path: String): void</TD></TR>
+<TR><TD ALIGN="LEFT" >+   setTime(time: int): void</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+} 
+
+subgraph cluster_726851148 { 
+   	label=demolition
+	labeljust=l
+	fillcolor="#ececec"
+	style=filled
+   
+   App726851148[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="CENTER" >App</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   bomb: Bomb</TD></TR>
+<TR><TD ALIGN="LEFT" >-   bombAnimationInterval: int</TD></TR>
+<TR><TD ALIGN="LEFT" >-   bombDetonationTime: int</TD></TR>
+<TR><TD ALIGN="LEFT" >-   bombGuy: BombGuy</TD></TR>
+<TR><TD ALIGN="LEFT" >-   clockIcon: PImage</TD></TR>
+<TR><TD ALIGN="LEFT" >-   currentGameLevel: GameLevel</TD></TR>
+<TR><TD ALIGN="LEFT" >-   explosion: Explosion</TD></TR>
+<TR><TD ALIGN="LEFT" >-   explosionInterval: int</TD></TR>
+<TR><TD ALIGN="LEFT" >-   gameConfig: GameConfig</TD></TR>
+<TR><TD ALIGN="LEFT" >-   gameMap: DemolitionGameMap</TD></TR>
+<TR><TD ALIGN="LEFT" >-   grid: String[][]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   level: int</TD></TR>
+<TR><TD ALIGN="LEFT" >-   playerAnimationInterval: int</TD></TR>
+<TR><TD ALIGN="LEFT" >-   playerLevelIcon: PImage</TD></TR>
+<TR><TD ALIGN="LEFT" >-   playerMoveInterval: int</TD></TR>
+<TR><TD ALIGN="LEFT" >-   redEnemies: List&lt;RedEnemy&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >#   redEnemySprites: Map&lt;Orientation, List&lt;PImage&gt;&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >-   yellowEnemies: List&lt;YellowEnemy&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >#   yellowEnemySprites: Map&lt;Orientation, List&lt;PImage&gt;&gt;</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ draw(): void</TD></TR>
+<TR><TD ALIGN="LEFT" >- isEnemyInTheSameSpace(enemies: List&lt;? extends GamePlayer&gt;): boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >+ keyPressed(): void</TD></TR>
+<TR><TD ALIGN="LEFT" >+ loadConfig(config: GameConfig): void</TD></TR>
+<TR><TD ALIGN="LEFT" >- loadICons(): void</TD></TR>
+<TR><TD ALIGN="LEFT" >+ main(args: String[]): void</TD></TR>
+<TR><TD ALIGN="LEFT" >+ mutateGrid(coord: Integer[], destruction: String): void</TD></TR>
+<TR><TD ALIGN="LEFT" >- reachedGoal(): boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >+ settings(): void</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setup(): void</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getGrid(): String[][]</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getRedEnemies(): List&lt;RedEnemy&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getYellowEnemies(): List&lt;RedEnemy&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getBombGuy(): BombGuy</TD></TR>
+<TR><TD ALIGN="LEFT" >- isEnemyInTheSameSpace(): boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >+ main(): void</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+Bomb726851148[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="CENTER" >Bomb</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   bombSpriteIndex: int</TD></TR>
+<TR><TD ALIGN="LEFT" >-   bombSprites: List&lt;PImage&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >-   canPlaceBomb: boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >-   xCoord: int</TD></TR>
+<TR><TD ALIGN="LEFT" >-   yCoord: int</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ addBombSprites(folderName: String, pApplet: PApplet)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getxCoord(): int</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getyCoord(): int</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setxCoord(x: int): void</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setyCoord(y: int): void</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setCanPlaceBomb(canPlaceBomb: boolean): void</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setBombSpriteIndex(spriteIndex: int): void</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getBombSpriteIndex(): int</TD></TR>
+<TR><TD ALIGN="LEFT" >+ canPlaceBomb(): boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >+ draw(pApplet: PApplet)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ placeBomb(xCoord: int, yCoord: int)</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+BombGuy726851148[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >BombGuy</TD></TR>
+<HR/>
+<TR><TD ALIGN="CENTER" >+ <I>move(grid: String[][]): void</I></TD></TR>
+<TR><TD ALIGN="CENTER" >+ setCoord(grid: String[][]): void</TD></TR>
+<TR><TD ALIGN="CENTER" >+ setCoord(coord: Integer[][]): void</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+DemolitionGameMap726851148[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="CENTER" >DemolitionGameMap</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   brokenWall: PImage</TD></TR>
+<TR><TD ALIGN="LEFT" >-   emptyTile: PImage</TD></TR>
+<TR><TD ALIGN="LEFT" >-   goalCoord: Integer[]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   goaltile: PImage</TD></TR>
+<TR><TD ALIGN="LEFT" >-   solidWall: PImage</TD></TR>
+<TR><TD ALIGN="LEFT" >-   goalCoord: Integer[]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ buildMap(grid: String[][], app: PApplet)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getNumberOfEnemies(grid: String[][], enemyType: String): int</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getRedEnemies(grid: String[][]): List&lt;RedEnemy&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getYellowEnemies(grid: String[][]): List&lt;YellowEnemy&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setEmptyTile(pImage: PImage)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setBrokenWall(pImage: PImage)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setSolidWall(pImage: PImage)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setGoalTile(pImage: PImage)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getEmptyTile(): PImage</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getBrokenWall(): PImage</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getGoalTile(): PImage</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getSolidWall(): PImage</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getGoalCoord(): Integer[]</TD></TR>
+
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+Explosion726851148[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="CENTER" >Explosion</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   canExplode: boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >-   explosionSprites: Map&lt;ExplosionSpriteOrientation, PImage&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >-   xCoord: int</TD></TR>
+<TR><TD ALIGN="LEFT" >-   yCoord: int</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ addExplosionSprites(pApplet: PApplet)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setCanExplode(canExplode: boolean): void</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setxCoord(x: int): void</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setyCoord(y: int): void</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getxCoord(): int</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getyCoord(): int</TD></TR>
+<TR><TD ALIGN="LEFT" >+ canExplode(): boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >+ canExplodeInCoord(coord: Integer[], grid: String[][]): boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >+ detetectPlayersAndBrokenWalls(coord: Integer[], grid: String[][], app: App): boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >+ explode(app: App): void</TD></TR>
+<TR><TD ALIGN="LEFT" >- getSpriteFromFile(fileName: String, pApplet: PApplet): PImage</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+GamePlayer726851148[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="CENTER" >GamePlayer</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >#   caughtInExplosion: boolean [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   imageIndex: int</TD></TR>
+<TR><TD ALIGN="LEFT" >#   orientation: Orientation</TD></TR>
+<TR><TD ALIGN="LEFT" >-   originalPosition: Integer[]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   playerSprites: Map&lt;Orientation, List&lt;PImage&gt;&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >#   xCoord: Integer</TD></TR>
+<TR><TD ALIGN="LEFT" >#   yCoord: Integer</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ setxCoord(x: int): void</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setyCoord(y: int): void</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getxCoord(): int</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getyCoord(): int</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setCaughtInExplosion(caughtInExplosion: boolean): void</TD></TR>
+<TR><TD ALIGN="LEFT" >+ isCaughtInExplosion(): boolen</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setOrientation(orientation: Orientation): void</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getOrientation(): Orientation</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setOriginalPosition(originalPosition: Integer[]): void</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getOriginalPosition(): Integer[]</TD></TR>
+<TR><TD ALIGN="LEFT" >- setPlayerSprite(orientation: Orientation, pImage: PImage): void</TD></TR>
+<TR><TD ALIGN="LEFT" >+ addPlayerSprites(folderName: String, fileName: String, app: App)</TD></TR>
+<TR><TD ALIGN="LEFT" ># canMoveTo(coord: Integer[], grid: String[][]): boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >+ draw(pApp: PApplet, direction: Orientation)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setImageIndex(imageIndex: int): void</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getImageIndex(): int</TD></TR>
+<TR><TD ALIGN="LEFT" >- getImageFromFile(folderName: String, fileName: String, pApplet: PApplet): PImage</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getPlayerImage(direction: Orientation): List&lt;PImage&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ <I>move(grid: String[][]): void</I></TD></TR>
+<TR><TD ALIGN="LEFT" >+ resetCoord(): void</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setPlayerSprites(playerSprites: Map&lt;Orientation, List&lt;PImage&gt;&gt;): void</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getPlayerSprites(playerSprites: Map&lt;Orientation, List&lt;PImage&gt;&gt;): Map&lt;Orientation, List&lt;PImage&gt;&gt;</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+RedEnemy726851148[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="CENTER" >RedEnemy</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   hitTop: boolean </TD></TR>
+<TR><TD ALIGN="LEFT" >-   hitleft: boolean</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ getAdjacentCoords(grid: String[][]): Map&lt;Orientation, Integer[]&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ <I>move(grid: String[][]): void</I></TD></TR>
+<TR><TD ALIGN="LEFT" >+ setRandomCoord(Map&lt;orientation: Orientation, adjCoords: Integer&gt;): void</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setNextCoord(coord: Integer[], orientation: Orientation): void</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setCoord(coord: String[][]): void</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setCoord(coord: Integer[]): void</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+YellowEnemy726851148[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="CENTER">YellowEnemy</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ <I> move(grid: String[][]) </I> </TD></TR>
+<TR><TD ALIGN="LEFT" >+ setCoord(coord: String[][]): void</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setCoord(coord: Integer[]): void</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+} 
+
+'edges    
+App726851148 -> Bomb726851148[label="bomb
+[0..1]"];
+App726851148 -> BombGuy726851148[label="bombGuy
+[0..1]"];
+App726851148 -> DemolitionGameMap726851148[label="gameMap
+[0..1]"];
+App726851148 -> Explosion726851148[label="explosion
+[0..1]"];
+App726851148 -> GameConfig1790511108[label="gameConfig
+[0..1]"];
+App726851148 -> GameLevel1790511108[label="currentGameLevel
+[0..1]"];
+App726851148 -> RedEnemy726851148[label="redEnemies
+[0..*]"];
+App726851148 -> YellowEnemy726851148[label="yellowEnemies
+[0..*]"];
+GameConfig1790511108 -> GameLevel1790511108[label="levels
+[0..*]"];
+GamePlayer726851148 -> BombGuy726851148[arrowhead=none, arrowtail=empty, dir=both];
+GamePlayer726851148 -> RedEnemy726851148[arrowhead=none, arrowtail=empty, dir=both];
+GamePlayer726851148 -> YellowEnemy726851148[arrowhead=none, arrowtail=empty, dir=both];
+    
+}
+@enduml
